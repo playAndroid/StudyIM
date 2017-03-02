@@ -1,13 +1,22 @@
 package com.android.hlk.studyim.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Config;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.orhanobut.logger.Logger;
+
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.ButterKnife;
 
@@ -79,44 +88,49 @@ public class BaseActivity extends AppCompatActivity {
             finish();
     }
 
-//    public Bundle getBundle() {
-//        if (getIntent() != null && getIntent().hasExtra(getPackageName()))
-//            return getIntent().getBundleExtra(getPackageName());
-//        else
-//            return null;
-//    }
+    @Subscribe
+    public void onEvent(Boolean empty){
 
-//    /**
-//     * 隐藏软键盘
-//     */
-//    public void hideSoftInputView() {
-//        InputMethodManager manager = ((InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE));
-//        if (getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
-//            if (getCurrentFocus() != null)
-//                manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-//        }
-//    }
+    }
 
-//    /**
-//     * 隐藏软键盘-一般是EditText.getWindowToken()
-//     *
-//     * @param token
-//     */
-//    public void hideSoftInput(IBinder token) {
-//        if (token != null) {
-//            InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//            im.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
-//        }
-//    }
+    public Bundle getBundle() {
+        if (getIntent() != null && getIntent().hasExtra(getPackageName()))
+            return getIntent().getBundleExtra(getPackageName());
+        else
+            return null;
+    }
 
-//    /**
-//     * Log日志
-//     *
-//     * @param msg
-//     */
-//    public void log(String msg) {
-//        if (Config.DEBUG) {
-//            Logger.i(msg);
-//        }
-//    }
+    /**
+     * 隐藏软键盘
+     */
+    public void hideSoftInputView() {
+        InputMethodManager manager = ((InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE));
+        if (getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
+            if (getCurrentFocus() != null)
+                manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    /**
+     * 隐藏软键盘-一般是EditText.getWindowToken()
+     *
+     * @param token
+     */
+    public void hideSoftInput(IBinder token) {
+        if (token != null) {
+            InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            im.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    /**
+     * Log日志
+     *
+     * @param msg
+     */
+    public void log(String msg) {
+        if (Config.DEBUG) {
+            Logger.i(msg);
+        }
+    }
 }

@@ -7,5 +7,5 @@ package com.android.hlk.studyim.listener;
 public interface LogInListener {
     void success();
 
-    void failed();
+    void failed(String message);
 }

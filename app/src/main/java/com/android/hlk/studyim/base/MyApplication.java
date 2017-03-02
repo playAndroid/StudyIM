@@ -1,6 +1,7 @@
 package com.android.hlk.studyim.base;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.android.hlk.studyim.message.DemoMessageHandler;
 
@@ -9,29 +10,44 @@ import java.io.File;
 import java.io.FileReader;
 
 import cn.bmob.newim.BmobIM;
+import cn.bmob.v3.Bmob;
+
 
 /**
  * Created by user on 2017/3/1.
  */
 
 public class MyApplication extends Application {
+
+    private static Context mContext;
+
+
+    public static Context getContext() {
+        return mContext;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
-//        //NewIM初始化
-//        BmobIM.init(this);
-//        //注册消息接收器
-//        BmobIM.registerDefaultMessageHandler(new DemoMessageHandler(this));
-        //只有主进程运行的时候才需要初始化
+        mContext = getApplicationContext();
+        //NewIM初始化
+        BmobIM.init(this);
+        //注册消息接收器
+        BmobIM.registerDefaultMessageHandler(new DemoMessageHandler(this));
+//        只有主进程运行的时候才需要初始化
         if (getApplicationInfo().packageName.equals(getMyProcessName())){
             //im初始化
             BmobIM.init(this);
             //注册消息接收器
             BmobIM.registerDefaultMessageHandler(new DemoMessageHandler(this));
         }
+
+        Bmob.initialize(this, "bd16b82c774365a2072f95072d4cf8ee");
     }
+
     /**
      * 获取当前运行的进程名
+     *
      * @return
      */
     public static String getMyProcessName() {

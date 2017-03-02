@@ -12,11 +12,11 @@ import com.android.hlk.studyim.base.BaseActivity;
 import com.android.hlk.studyim.event.FinishEvent;
 import com.android.hlk.studyim.listener.LogInListener;
 import com.android.hlk.studyim.model.UserModel;
+import com.android.hlk.studyim.utils.ToastUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by user on 2017/3/1.
@@ -37,43 +37,50 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        registListener();
+
+        loginCache();
     }
 
-    @OnClick(R.id.btn_login)
-    public void onLoginClick(View view) {
-//        UserModel.getInstance().login(et_username.getText().toString(), et_password.getText().toString(), new LogInListener() {
-//
-//            @Override
-//            public void done(Object o, BmobException e) {
-//                if (e == null) {
-//                    User user =(User)o;
-//                    BmobIM.getInstance().updateUserInfo(new BmobIMUserInfo(user.getObjectId(), user.getUsername(), user.getAvatar()));
-//                    startActivity(MainActivity.class, null, true);
-//                } else {
-//                    toast(e.getMessage() + "(" + e.getErrorCode() + ")");
-//                }
-//            }
-//        });
-
-        UserModel.getInstance().login(et_username.getText().toString().trim(), et_password.getText().toString().trim()
-                , new LogInListener() {
-                    @Override
-                    public void success() {
-                        //登陆成功
-                    }
-
-                    @Override
-                    public void failed() {
-                        //登陆失败
-                    }
-                });
+    private void loginCache() {
+//        BmobUser bmobUser = BmobUser.getCurrentUser();
+//        if(bmobUser != null){
+//            // 允许用户使用应用
+//            startActivity(MainActivity.class, true);
+//        }else{
+//            //缓存用户对象为空时， 可打开用户注册界面…
+//        }
     }
 
-    @OnClick(R.id.tv_register)
-    public void onRegisterClick(View view) {
-//        startActivity(RegisterActivity.class, null, false);
-        startActivity(RegisterActivity.class, true);
+    private void registListener() {
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserModel.getInstance().login(et_username.getText().toString().trim(), et_password.getText().toString().trim()
+                        , new LogInListener() {
+                            @Override
+                            public void success() {
+                                //登陆成功
+                                ToastUtils.toast("登陆");
+                                startActivity(MainActivity.class, true);
+                            }
+
+                            @Override
+                            public void failed(String message) {
+                                //登陆失败
+                                ToastUtils.toast(message);
+                            }
+                        });
+            }
+        });
+        tv_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(RegisterActivity.class, false);
+            }
+        });
     }
+
 
     @Subscribe
     public void onEventMainThread(FinishEvent event) {

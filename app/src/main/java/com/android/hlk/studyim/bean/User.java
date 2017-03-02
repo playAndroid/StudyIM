@@ -1,35 +1,37 @@
 package com.android.hlk.studyim.bean;
 
+import cn.bmob.v3.BmobUser;
+
 /**
  * Created by user on 2017/3/1.
  */
 
-public class User {
-    private String clientId;
-    private String name;
-    private String password;
+public class User extends BmobUser {
+    private Boolean sex;
+    private String nick;
+    private Integer age;
 
-    public String getName() {
-        return name;
+    public Boolean getSex() {
+        return sex;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSex(Boolean sex) {
+        this.sex = sex;
     }
 
-    public String getPassword() {
-        return password;
+    public String getNick() {
+        return nick;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setNick(String nick) {
+        this.nick = nick;
     }
 
-    public String getClientId() {
-        return clientId;
+    public Integer getAge() {
+        return age;
     }
 
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }
